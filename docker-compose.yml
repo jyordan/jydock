@@ -42,7 +42,7 @@ services:
     image: romeoz/docker-apache-php:${APACHE_PHP_VERSION}
     volumes:
       - ${APP_CODE_PATH_HOST}:/var/www/app/
-      - ./apache2/${APACHE_CONF_TYPE}:/etc/apache2/sites-enabled/
+      - ${APACHE_CONF_DIR}:/etc/apache2/sites-enabled/
     ports:
       - "80:80"
     depends_on:
