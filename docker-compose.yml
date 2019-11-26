@@ -60,6 +60,7 @@ services:
     image: shincoder/homestead:php${APACHE_PHP_VERSION}
     restart: always
     volumes:
+      - ./homestead/alias.sh:/root/.bash_aliases
       - ../:/codes
     networks:
       - backend
