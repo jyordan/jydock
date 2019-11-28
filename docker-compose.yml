@@ -70,8 +70,21 @@ services:
     links:
       - apache2
       - apache2:localhost.test
+      - selenium
     networks:
       - backend
       - frontend
     depends_on:
       - "${PMA_DB_ENGINE}"
+
+  selenium:
+    image: selenium/standalone-chrome:3.11.0-antimony
+    depends_on:
+      - apache2
+    links:
+      - apache2
+      - apache2:localhost.test
+    networks:
+      - frontend
+    ports:
+      - 9515:9515
