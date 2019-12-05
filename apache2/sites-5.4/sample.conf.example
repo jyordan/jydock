@@ -1,12 +1,11 @@
 <VirtualHost *:80>
   ServerAdmin admin@localhost
-  ServerName app
-  #ServerAlias www.app
-  DocumentRoot /var/www/app
+  ServerName localhost.test
+  DocumentRoot /var/www/sample
 
- <Directory /var/www/app>
+ <Directory /var/www/sample>
     Options FollowSymLinks
-    AllowOverride all
+    AllowOverride None
     AddDefaultCharset utf-8
     DirectoryIndex index.php
     Order allow,deny
@@ -27,4 +26,5 @@
         RewriteRule . /index.php [L]
     </IfModule>
   </Directory>
+
 </VirtualHost>
