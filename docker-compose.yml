@@ -70,7 +70,6 @@ services:
       - ./homestead/alias.sh:/root/.bash_aliases
       - ../:/codes
     working_dir: /codes
-      - ${APP_CODE_PATH_HOST}:/var/www/
     links:
       - apache2
       - apache2:localhost.test
