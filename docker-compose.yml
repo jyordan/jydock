@@ -19,7 +19,7 @@ services:
       - MYSQL_PASSWORD=${PMA_PASSWORD}
       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
     volumes:
-      - ~/jydock/mysql-data:/var/lib/mysql
+      - "~/jydock/mysql-data:/var/lib/mysql"
     ports:
       - "${MYSQL_PORT}:3306"
     networks:
@@ -36,7 +36,7 @@ services:
       - MYSQL_PASSWORD=${PMA_PASSWORD}
       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
     volumes:
-      - ./phpmyadmin/uploads.ini:/usr/local/etc/php/conf.d/uploads.ini
+      - "./phpmyadmin/uploads.ini:/usr/local/etc/php/conf.d/uploads.ini"
     ports:
       - "${PMA_PORT}:80"
     depends_on:
@@ -67,8 +67,8 @@ services:
     restart: always
     working_dir: /var/www
     volumes:
-      - ./homestead/alias.sh:/root/.bash_aliases
-      - ../:/codes
+      - "./homestead/alias.sh:/root/.bash_aliases"
+      - "../:/codes"
     working_dir: /codes
     links:
       - apache2
