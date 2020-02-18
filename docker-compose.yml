@@ -62,6 +62,23 @@ services:
       - backend
       - frontend
 
+  apache2_8000:
+    # https://github.com/romeOz/docker-apache-php
+    image: romeoz/docker-apache-php:${PORT_8000_APACHE_PHP_VERSION}
+    restart: always
+    working_dir: /var/www
+    volumes:
+      - ./apache2/vhost.conf:/etc/apache2/sites-enabled/app.conf
+      - ${PORT_8000_APP_CODE_PATH_HOST}:/var/www/
+      - ${PORT_8000_APACHE_SITES_PATH}:/etc/apache2/sites-available
+    ports:
+      - "8000:80"
+    depends_on:
+      - "phpmyadmin"
+    networks:
+      - backend
+      - frontend
+
   homestead:
     image: shincoder/homestead:php${APACHE_PHP_VERSION}
     restart: always
