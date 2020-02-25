@@ -80,7 +80,7 @@ services:
       - frontend
 
   homestead:
-    image: shincoder/homestead:php${APACHE_PHP_VERSION}
+    image: shincoder/homestead:php${HOMESTEAD_PHP_VERSION}
     restart: always
     working_dir: /var/www
     volumes:
