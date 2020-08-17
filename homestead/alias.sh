@@ -149,3 +149,5 @@ function fs() {
 		du $arg .[^.]* ./*;
 	fi;
 }
+
+echo 'export PATH=~/.composer/vendor/bin:$PATH' >> ~/.bashrc
