@@ -117,6 +117,24 @@ services:
       - backend
       - frontend
 
+  apache2_8001:
+    # https://github.com/romeOz/docker-apache-php
+    image: romeoz/docker-apache-php:${PORT_8001_APACHE_PHP_VERSION}
+    restart: always
+    working_dir: /var/www
+    volumes:
+      - ./apache2/vhost.conf:/etc/apache2/sites-enabled/app.conf
+      - ${PORT_8001_APP_CODE_PATH_HOST}:/var/www/
+      - ${PORT_8001_APACHE_SITES_PATH}:/etc/apache2/sites-available
+    ports:
+      - "8001:80"
+    depends_on:
+      - phpmyadmin
+      - homestead
+    networks:
+      - backend
+      - frontend
+
   homestead:
     image: shincoder/homestead:php${HOMESTEAD_PHP_VERSION}
     restart: always
@@ -126,6 +144,8 @@ services:
       - "./homestead/alias.sh:/home/homestead/.bash_aliases"
       - "../:/codes"
     working_dir: /codes
+    ports:
+      - "9912:9912"
     links:
       - apache2
       - apache2:localhost.test
