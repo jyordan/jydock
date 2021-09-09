@@ -82,9 +82,10 @@ services:
       - frontend
       - backend
 
-  apache2:
+  web1:
     # https://github.com/romeOz/docker-apache-php
-    image: romeoz/docker-apache-php:${APACHE_PHP_VERSION}
+    # image: romeoz/docker-apache-php:${APACHE_PHP_VERSION}
+    build: ./php-apache2/php5.4
     restart: always
     working_dir: /var/www
     volumes:
@@ -94,14 +95,15 @@ services:
     ports:
       - "80:80"
     depends_on:
-      - "phpmyadmin"
+      - phpmyadmin
     networks:
       - backend
       - frontend
 
-  apache2_8000:
+  web2:
     # https://github.com/romeOz/docker-apache-php
-    image: romeoz/docker-apache-php:${PORT_8000_APACHE_PHP_VERSION}
+    # image: romeoz/docker-apache-php:${PORT_8000_APACHE_PHP_VERSION}
+    build: ./php-apache2/php7.2
     restart: always
     working_dir: /var/www
     volumes:
@@ -117,7 +119,7 @@ services:
       - backend
       - frontend
 
-  apache2_8001:
+  web3:
     # https://github.com/romeOz/docker-apache-php
     # image: romeoz/docker-apache-php:${PORT_8001_APACHE_PHP_VERSION}
     build: ./php-apache2/php7.4
@@ -149,8 +151,8 @@ services:
     ports:
       - "9912:9912"
     links:
-      - apache2
-      - apache2:localhost.test
+      - web1
+      - web1:localhost.test
       - selenium
     networks:
       - backend
@@ -162,14 +164,14 @@ services:
   selenium:
     image: selenium/standalone-chrome:3.11.0-antimony
     depends_on:
-      - apache2
+      - web1
     links:
-      - apache2
-      - apache2:localhost.test
+      - web1
+      - web1:localhost.test
     networks:
       - frontend
     ports:
-      - 9515:9515
+      - "19515:9515"
       
   redis:
     image: 'bitnami/redis:latest'
@@ -177,3 +179,5 @@ services:
       - ALLOW_EMPTY_PASSWORD=yes
     networks:
       - backend
+    ports:
+      - "16379:6379"
