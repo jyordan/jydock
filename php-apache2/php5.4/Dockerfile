@@ -2,8 +2,6 @@ FROM php:5.4.45-apache
 
 USER root
 
-WORKDIR /var/www/html
-
 RUN sed -i '/jessie-updates/d' /etc/apt/sources.list  # Now archived
 
 RUN docker-php-ext-install pdo pdo_mysql mysqli mysql
