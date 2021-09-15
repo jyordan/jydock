@@ -13,7 +13,7 @@ services:
     image: mysql:${MYSQL_VERSION}
     command: --default-authentication-plugin=mysql_native_password
     command: mysqld --sql_mode=""
-    restart: always
+    # restart: always
     environment:
       - MYSQL_USER=${PMA_USER}
       - MYSQL_PASSWORD=${PMA_PASSWORD}
@@ -30,7 +30,7 @@ services:
     image: mysql:${MYSQL_VERSION}
     command: --default-authentication-plugin=mysql_native_password
     command: mysqld --sql_mode=""
-    restart: always
+    # restart: always
     environment:
       - MYSQL_USER=${PMA_USER}
       - MYSQL_PASSWORD=${PMA_PASSWORD}
@@ -45,7 +45,7 @@ services:
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
     # command: bash -c "sed -i 's,^post_max_size =.*$,post_max_size = 2048M,' php.ini"
-    restart: always
+    # restart: always
     environment:
       # - PMA_ARBITRARY=1
       - PMA_HOST=${PMA_DB_ENGINE}
@@ -65,7 +65,7 @@ services:
   phpmyadmin2:
     image: phpmyadmin/phpmyadmin
     # command: bash -c "sed -i 's,^post_max_size =.*$,post_max_size = 2048M,' php.ini"
-    restart: always
+    # restart: always
     environment:
       # - PMA_ARBITRARY=1
       - PMA_HOST=${PMA_DB_ENGINE}2
@@ -86,7 +86,7 @@ services:
     # https://github.com/romeOz/docker-apache-php
     # image: romeoz/docker-apache-php:${APACHE_PHP_VERSION}
     build: ./php-apache2/php5.4
-    restart: always
+    # restart: always
     working_dir: /var/www
     volumes:
       - ${APP_CODE_PATH_HOST}:/var/www
@@ -104,17 +104,17 @@ services:
     # https://github.com/romeOz/docker-apache-php
     # image: romeoz/docker-apache-php:${PORT_8000_APACHE_PHP_VERSION}
     build: ./php-apache2/php7.2
-    restart: always
+    # restart: always
     working_dir: /var/www
     volumes:
       - ./apache2/vhost.conf:/etc/apache2/sites-enabled/app.conf
       - ${PORT_8000_APP_CODE_PATH_HOST}:/var/www/
       - ${PORT_8000_APACHE_SITES_PATH}:/etc/apache2/sites-available
     ports:
-      - "8000:80"
+      - "80:80"
     depends_on:
       - phpmyadmin
-      - homestead
+      - redis
     networks:
       - backend
       - frontend
@@ -130,10 +130,10 @@ services:
       - ${PORT_8001_APP_CODE_PATH_HOST}:/var/www/
       - ${PORT_8001_APACHE_SITES_PATH}:/etc/apache2/sites-available
     ports:
-      - "8001:80"
+      - "80:80"
     depends_on:
       - phpmyadmin
-      - homestead
+      - redis
     networks:
       - backend
       - frontend
@@ -141,7 +141,7 @@ services:
 
   homestead:
     image: shincoder/homestead:php${HOMESTEAD_PHP_VERSION}
-    restart: always
+    # restart: always
     working_dir: /var/www
     volumes:
       - "./homestead/alias.sh:/root/.bash_aliases"
@@ -168,6 +168,7 @@ services:
       
   redis:
     image: 'bitnami/redis:latest'
+    restart: always
     environment:
       - ALLOW_EMPTY_PASSWORD=yes
     networks:
