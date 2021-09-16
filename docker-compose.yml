@@ -138,7 +138,7 @@ services:
       - backend
       - frontend
 
-  web3:
+  web4:
     # https://github.com/romeOz/docker-apache-php
     # image: romeoz/docker-apache-php:${PORT_8001_APACHE_PHP_VERSION}
     build: ./php-apache2/php8.0
