@@ -129,6 +129,7 @@ services:
       - ./apache2/vhost.conf:/etc/apache2/sites-enabled/app.conf
       - ${PORT_8001_APP_CODE_PATH_HOST}:/var/www/
       - ${PORT_8001_APACHE_SITES_PATH}:/etc/apache2/sites-available
+      - ./php-apache2/php-ini/php.ini:/usr/local/etc/php/conf.d/php.ini
     ports:
       - "80:80"
     depends_on:
