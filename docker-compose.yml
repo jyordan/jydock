@@ -13,7 +13,6 @@ services:
     image: mysql:${MYSQL_VERSION}
     command: --default-authentication-plugin=mysql_native_password
     command: mysqld --sql_mode=""
-    restart: "no"
     environment:
       - MYSQL_USER=${PMA_USER}
       - MYSQL_PASSWORD=${PMA_PASSWORD}
@@ -30,7 +29,6 @@ services:
     image: mysql:${MYSQL_VERSION}
     command: --default-authentication-plugin=mysql_native_password
     command: mysqld --sql_mode=""
-    restart: "no"
     environment:
       - MYSQL_USER=${PMA_USER}
       - MYSQL_PASSWORD=${PMA_PASSWORD}
@@ -45,7 +43,6 @@ services:
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
     # command: bash -c "sed -i 's,^post_max_size =.*$,post_max_size = 2048M,' php.ini"
-    restart: "no"
     environment:
       # - PMA_ARBITRARY=1
       - PMA_HOST=${PMA_DB_ENGINE}
@@ -65,7 +62,6 @@ services:
   phpmyadmin2:
     image: phpmyadmin/phpmyadmin
     # command: bash -c "sed -i 's,^post_max_size =.*$,post_max_size = 2048M,' php.ini"
-    restart: "no"
     environment:
       # - PMA_ARBITRARY=1
       - PMA_HOST=${PMA_DB_ENGINE}2
@@ -86,7 +82,6 @@ services:
     # https://github.com/romeOz/docker-apache-php
     # image: romeoz/docker-apache-php:${APACHE_PHP_VERSION}
     build: ./php-apache2/php5.4
-    restart: "no"
     working_dir: /var/www
     volumes:
       - ${APP_CODE_PATH_HOST}:/var/www
@@ -104,7 +99,6 @@ services:
     # https://github.com/romeOz/docker-apache-php
     # image: romeoz/docker-apache-php:${PORT_8000_APACHE_PHP_VERSION}
     build: ./php-apache2/php7.2
-    restart: "no"
     working_dir: /var/www
     volumes:
       - ./apache2/vhost.conf:/etc/apache2/sites-enabled/app.conf
@@ -123,7 +117,6 @@ services:
     # https://github.com/romeOz/docker-apache-php
     # image: romeoz/docker-apache-php:${PORT_8001_APACHE_PHP_VERSION}
     build: ./php-apache2/php7.4
-    restart: always
     working_dir: /var/www
     volumes:
       - ./apache2/vhost.conf:/etc/apache2/sites-enabled/app.conf
@@ -143,7 +136,6 @@ services:
     # https://github.com/romeOz/docker-apache-php
     # image: romeoz/docker-apache-php:${PORT_8001_APACHE_PHP_VERSION}
     build: ./php-apache2/php8.0
-    restart: always
     working_dir: /var/www
     volumes:
       - ./apache2/vhost.conf:/etc/apache2/sites-enabled/app.conf
@@ -161,7 +153,6 @@ services:
 
   homestead:
     image: shincoder/homestead:php${HOMESTEAD_PHP_VERSION}
-    restart: "no"
     working_dir: /var/www
     volumes:
       - "./homestead/alias.sh:/root/.bash_aliases"
@@ -188,7 +179,6 @@ services:
       
   redis:
     image: 'bitnami/redis:latest'
-    restart: always
     environment:
       - ALLOW_EMPTY_PASSWORD=yes
     networks:

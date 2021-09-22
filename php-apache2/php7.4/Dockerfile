@@ -13,6 +13,7 @@ RUN apt-get update && apt-get install -y \
         zip \
         curl \
         unzip \
+        nano \
     && docker-php-ext-configure gd \
     && docker-php-ext-install -j$(nproc) gd \
     && docker-php-ext-install pdo_mysql \
