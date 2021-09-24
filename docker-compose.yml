@@ -40,7 +40,7 @@ services:
     networks:
       - backend
 
-  phpmyadmin:
+  phpmyadmin1:
     image: phpmyadmin/phpmyadmin
     # command: bash -c "sed -i 's,^post_max_size =.*$,post_max_size = 2048M,' php.ini"
     environment:
@@ -79,96 +79,71 @@ services:
       - backend
 
   web1:
-    # https://github.com/romeOz/docker-apache-php
-    # image: romeoz/docker-apache-php:${APACHE_PHP_VERSION}
     build: ./php-apache2/php5.4
     working_dir: /var/www
     volumes:
-      - ${APP_CODE_PATH_HOST}:/var/www
       - ./apache2/vhost.conf:/etc/apache2/sites-enabled/app.conf
-      - ${APACHE_SITES_PATH}:/etc/apache2/sites-available
+      - ${WEB1_APP}:/var/www/
+      - ${WEB1_APACHE_SITES}:/etc/apache2/sites-available
+      - ./php-apache2/php-ini/php.ini:/usr/local/etc/php/conf.d/php.ini
     ports:
-      - "80:80"
+      - "${WEB1_PORT:-80}:80"
     depends_on:
-      - phpmyadmin
+      - phpmyadmin1
     networks:
       - backend
       - frontend
 
   web2:
-    # https://github.com/romeOz/docker-apache-php
-    # image: romeoz/docker-apache-php:${PORT_8000_APACHE_PHP_VERSION}
     build: ./php-apache2/php7.2
     working_dir: /var/www
     volumes:
       - ./apache2/vhost.conf:/etc/apache2/sites-enabled/app.conf
-      - ${PORT_8000_APP_CODE_PATH_HOST}:/var/www/
-      - ${PORT_8000_APACHE_SITES_PATH}:/etc/apache2/sites-available
+      - ${WEB2_APP}:/var/www/
+      - ${WEB2_APACHE_SITES}:/etc/apache2/sites-available
+      - ./php-apache2/php-ini/php.ini:/usr/local/etc/php/conf.d/php.ini
     ports:
-      - "80:80"
+      - "${WEB2_PORT:-80}:80"
     depends_on:
-      - phpmyadmin
+      - phpmyadmin1
       - redis
     networks:
       - backend
       - frontend
 
   web3:
-    # https://github.com/romeOz/docker-apache-php
-    # image: romeoz/docker-apache-php:${PORT_8001_APACHE_PHP_VERSION}
     build: ./php-apache2/php7.4
     working_dir: /var/www
     volumes:
       - ./apache2/vhost.conf:/etc/apache2/sites-enabled/app.conf
-      - ${PORT_8001_APP_CODE_PATH_HOST}:/var/www/
-      - ${PORT_8001_APACHE_SITES_PATH}:/etc/apache2/sites-available
+      - ${WEB3_APP}:/var/www/
+      - ${WEB3_APACHE_SITES}:/etc/apache2/sites-available
       - ./php-apache2/php-ini/php.ini:/usr/local/etc/php/conf.d/php.ini
     ports:
-      - "80:80"
+      - "${WEB3_PORT:-80}:80"
     depends_on:
-      - phpmyadmin
+      - phpmyadmin1
       - redis
     networks:
       - backend
       - frontend
 
   web4:
-    # https://github.com/romeOz/docker-apache-php
-    # image: romeoz/docker-apache-php:${PORT_8001_APACHE_PHP_VERSION}
     build: ./php-apache2/php8.0
     working_dir: /var/www
     volumes:
       - ./apache2/vhost.conf:/etc/apache2/sites-enabled/app.conf
-      - ${PORT_8001_APP_CODE_PATH_HOST}:/var/www/
-      - ${PORT_8001_APACHE_SITES_PATH}:/etc/apache2/sites-available
+      - ${WEB4_APP}:/var/www/
+      - ${WEB4_APACHE_SITES}:/etc/apache2/sites-available
+      - ./php-apache2/php-ini/php.ini:/usr/local/etc/php/conf.d/php.ini
     ports:
-      - "80:80"
+      - "${WEB4_PORT:-80}:80"
     depends_on:
-      - phpmyadmin
+      - phpmyadmin1
       - redis
     networks:
       - backend
       - frontend
-      
-
-  homestead:
-    image: shincoder/homestead:php${HOMESTEAD_PHP_VERSION}
-    working_dir: /var/www
-    volumes:
-      - "./homestead/alias.sh:/root/.bash_aliases"
-      - "./homestead/alias.sh:/home/homestead/.bash_aliases"
-      - "../:/codes"
-    working_dir: /codes
-    ports:
-      - "9912:9912"
-    links:
-      - selenium
-    networks:
-      - backend
-      - frontend
-    depends_on:
-      - "${PMA_DB_ENGINE}"
-      - redis
 
   selenium:
     image: selenium/standalone-chrome:3.11.0-antimony
