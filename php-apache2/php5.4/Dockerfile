@@ -11,7 +11,7 @@ RUN yes | pecl install xdebug-2.4.1 \
     && echo "xdebug.remote_enable=on" >> /usr/local/etc/php/conf.d/xdebug.ini \
     && echo "xdebug.remote_autostart=off" >> /usr/local/etc/php/conf.d/xdebug.ini
 
-RUN set -eux; apt-get update; apt-get install -y libzip-dev zlib1g-dev; docker-php-ext-install zip nano
+RUN set -eux; apt-get update; apt-get install -y libzip-dev zlib1g-dev nano; docker-php-ext-install zip
 
 # COPY .docker/vhost.conf /etc/apache2/sites-available/000-default.conf
 
