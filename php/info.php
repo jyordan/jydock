@@ -1,1 +1,1 @@
-<?php phpinfo();
+<?php include_once('public/info.php');
