@@ -106,6 +106,7 @@ services:
     depends_on:
       - phpmyadmin1
       - redis
+      - artisan
     networks:
       - backend
       - frontend
@@ -123,6 +124,7 @@ services:
     depends_on:
       - phpmyadmin1
       - redis
+      - artisan
     networks:
       - backend
       - frontend
@@ -140,9 +142,24 @@ services:
     depends_on:
       - phpmyadmin1
       - redis
+      - artisan
     networks:
       - backend
       - frontend
+
+  artisan:
+    build: ./php-apache2/php${ARTISAN_VERSION}
+    working_dir: /var/www
+    volumes:
+      - ./apache2/vhost.conf:/etc/apache2/sites-enabled/app.conf
+      - ${ARTISAN_APP}:/var/www/
+      - ${ARTISAN_APACHE_SITES}:/etc/apache2/sites-available
+      - ./php-apache2/php-ini/php.ini:/usr/local/etc/php/conf.d/php.ini
+    depends_on:
+      - phpmyadmin1
+      - redis
+    networks:
+      - backend
 
   selenium:
     image: selenium/standalone-chrome:3.11.0-antimony
