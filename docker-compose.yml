@@ -44,8 +44,7 @@ services:
     image: phpmyadmin/phpmyadmin
     # command: bash -c "sed -i 's,^post_max_size =.*$,post_max_size = 2048M,' php.ini"
     environment:
-      # - PMA_ARBITRARY=1
-      - PMA_HOST=${PMA_DB_ENGINE1}
+      - PMA_HOST=mysql1
       - MYSQL_USER=${PMA_USER1}
       - MYSQL_PASSWORD=${PMA_PASSWORD1}
       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
@@ -54,7 +53,7 @@ services:
     ports:
       - "${PMA_PORT1}:80"
     depends_on:
-      - "${PMA_DB_ENGINE1}"
+      - mysql1
     networks:
       - frontend
       - backend
@@ -63,8 +62,7 @@ services:
     image: phpmyadmin/phpmyadmin
     # command: bash -c "sed -i 's,^post_max_size =.*$,post_max_size = 2048M,' php.ini"
     environment:
-      # - PMA_ARBITRARY=1
-      - PMA_HOST=${PMA_DB_ENGINE2}
+      - PMA_HOST=mysql2
       - MYSQL_USER=${PMA_USER1}
       - MYSQL_PASSWORD=${PMA_PASSWORD1}
       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
@@ -73,7 +71,7 @@ services:
     ports:
       - "${PMA_PORT2}:80"
     depends_on:
-      - "${PMA_DB_ENGINE2}"
+      - mysql2
     networks:
       - frontend
       - backend
