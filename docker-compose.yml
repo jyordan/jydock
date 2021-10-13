@@ -8,17 +8,17 @@ networks:
 
 services:
 
-  mysql:
+  mysql1:
     # https://hub.docker.com/_/mysql
     image: mysql:${MYSQL_VERSION}
     command: --default-authentication-plugin=mysql_native_password
     command: mysqld --sql_mode=""
     environment:
-      - MYSQL_USER=${PMA_USER}
-      - MYSQL_PASSWORD=${PMA_PASSWORD}
+      - MYSQL_USER=${PMA_USER1}
+      - MYSQL_PASSWORD=${PMA_PASSWORD1}
       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
     volumes:
-      - ~/jydock/mysql-data:/var/lib/mysql
+      - ./__volumes/mysql1-data:/var/lib/mysql
     ports:
       - "${MYSQL_PORT}:3306"
     networks:
@@ -30,11 +30,11 @@ services:
     command: --default-authentication-plugin=mysql_native_password
     command: mysqld --sql_mode=""
     environment:
-      - MYSQL_USER=${PMA_USER}
-      - MYSQL_PASSWORD=${PMA_PASSWORD}
+      - MYSQL_USER=${PMA_USER1}
+      - MYSQL_PASSWORD=${PMA_PASSWORD1}
       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
     volumes:
-      - ~/jydock/mysql2-data:/var/lib/mysql
+      - ./__volumes/mysql2-data:/var/lib/mysql
     ports:
       - "1${MYSQL_PORT}:3306"
     networks:
@@ -45,16 +45,16 @@ services:
     # command: bash -c "sed -i 's,^post_max_size =.*$,post_max_size = 2048M,' php.ini"
     environment:
       # - PMA_ARBITRARY=1
-      - PMA_HOST=${PMA_DB_ENGINE}
-      - MYSQL_USER=${PMA_USER}
-      - MYSQL_PASSWORD=${PMA_PASSWORD}
+      - PMA_HOST=${PMA_DB_ENGINE1}
+      - MYSQL_USER=${PMA_USER1}
+      - MYSQL_PASSWORD=${PMA_PASSWORD1}
       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
     volumes:
       - "./phpmyadmin/uploads.ini:/usr/local/etc/php/conf.d/uploads.ini"
     ports:
-      - "${PMA_PORT}:80"
+      - "${PMA_PORT1}:80"
     depends_on:
-      - "${PMA_DB_ENGINE}"
+      - "${PMA_DB_ENGINE1}"
     networks:
       - frontend
       - backend
@@ -64,16 +64,16 @@ services:
     # command: bash -c "sed -i 's,^post_max_size =.*$,post_max_size = 2048M,' php.ini"
     environment:
       # - PMA_ARBITRARY=1
-      - PMA_HOST=${PMA_DB_ENGINE}2
-      - MYSQL_USER=${PMA_USER}
-      - MYSQL_PASSWORD=${PMA_PASSWORD}
+      - PMA_HOST=${PMA_DB_ENGINE2}
+      - MYSQL_USER=${PMA_USER1}
+      - MYSQL_PASSWORD=${PMA_PASSWORD1}
       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
     volumes:
       - "./phpmyadmin/uploads.ini:/usr/local/etc/php/conf.d/uploads.ini"
     ports:
-      - "1${PMA_PORT}:80"
+      - "${PMA_PORT2}:80"
     depends_on:
-      - "${PMA_DB_ENGINE}"
+      - "${PMA_DB_ENGINE2}"
     networks:
       - frontend
       - backend
