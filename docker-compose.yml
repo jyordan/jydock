@@ -48,8 +48,10 @@ services:
       - MYSQL_USER=${PMA_USER1}
       - MYSQL_PASSWORD=${PMA_PASSWORD1}
       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
-    volumes:
-      - "./phpmyadmin/uploads.ini:/usr/local/etc/php/conf.d/uploads.ini"
+      - UPLOAD_LIMIT=500M
+      - MEMORY_LIMIT=500M
+    # volumes:
+    #   - "./phpmyadmin/uploads.ini:/usr/local/etc/php/conf.d/uploads.ini"
     ports:
       - "${PMA_PORT1}:80"
     depends_on:
@@ -66,8 +68,10 @@ services:
       - MYSQL_USER=${PMA_USER1}
       - MYSQL_PASSWORD=${PMA_PASSWORD1}
       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
-    volumes:
-      - "./phpmyadmin/uploads.ini:/usr/local/etc/php/conf.d/uploads.ini"
+      - UPLOAD_LIMIT=500M
+      - MEMORY_LIMIT=500M
+    # volumes:
+    #   - "./phpmyadmin/uploads.ini:/usr/local/etc/php/conf.d/uploads.ini"
     ports:
       - "${PMA_PORT2}:80"
     depends_on:
@@ -110,7 +114,7 @@ services:
       - frontend
 
   web3:
-    build: ./php-apache2/php7.4
+    build: ./php-apache2/php8.0
     working_dir: /var/www
     volumes:
       - ./apache2/vhost.conf:/etc/apache2/sites-enabled/app.conf
