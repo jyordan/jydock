@@ -22,5 +22,4 @@ RUN apk --update add \
 RUN curl -L https://github.com/AGWA/git-crypt/archive/$VERSION.tar.gz | tar zxv -C /var/tmp
 RUN cd /var/tmp/git-crypt-$VERSION && make && make install PREFIX=/usr/local
 
-RUN chown -R www-data:www-data /var/www/html \
-    && a2enmod rewrite
+RUN chown -R www-data:www-data /var/www/html 

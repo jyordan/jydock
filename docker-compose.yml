@@ -160,7 +160,7 @@ services:
     depends_on:
       - phpmyadmin1
       - redis
-      - editor
+      # - editor
     networks:
       - backend
 
