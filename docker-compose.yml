@@ -160,6 +160,18 @@ services:
     depends_on:
       - phpmyadmin1
       - redis
+      - editor
+    networks:
+      - backend
+
+  editor:
+    build: ./editor
+    working_dir: /var/www
+    volumes:
+      - ./apache2/vhost.conf:/etc/apache2/sites-enabled/app.conf
+      - ${EDITOR_APP}:/var/www/
+      - ${EDITOR_APACHE_SITES}:/etc/apache2/sites-available
+      - ./php-apache2/php-ini/php.ini:/usr/local/etc/php/conf.d/php.ini
     networks:
       - backend
 
