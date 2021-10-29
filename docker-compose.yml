@@ -18,7 +18,9 @@ services:
       - MYSQL_PASSWORD=${PMA_PASSWORD1}
       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
     volumes:
-      - ./__volumes/mysql1-data:/var/lib/mysql
+      - ./__volumes/mysql1/data:/var/lib/mysql
+      - ./__volumes/mysql1/log:/var/log/mysql
+      - ./__volumes/mysql1/conf:/etc/mysql/conf.d
     ports:
       - "${MYSQL_PORT}:3306"
     networks:
@@ -34,7 +36,9 @@ services:
       - MYSQL_PASSWORD=${PMA_PASSWORD1}
       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
     volumes:
-      - ./__volumes/mysql2-data:/var/lib/mysql
+      - ./__volumes/mysql2/data:/var/lib/mysql
+      - ./__volumes/mysql2/log:/var/log/mysql
+      - ./__volumes/mysql2/conf:/etc/mysql/conf.d
     ports:
       - "1${MYSQL_PORT}:3306"
     networks:
