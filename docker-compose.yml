@@ -102,7 +102,7 @@ services:
       - frontend
 
   web2:
-    build: ./php-apache2/php7.2
+    build: ./php-apache2/php7.4
     working_dir: /var/www
     volumes:
       - ./apache2/vhost.conf:/etc/apache2/sites-enabled/app.conf
