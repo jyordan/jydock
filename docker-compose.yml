@@ -87,7 +87,7 @@ services:
       - backend
 
   web1:
-    build: ./php-apache2/php5.4
+    build: ./php-apache2/php${WEB1_PHP}
     working_dir: /var/www
     volumes:
       - ./apache2/vhost.conf:/etc/apache2/sites-enabled/app.conf
@@ -102,7 +102,7 @@ services:
       - frontend
 
   web2:
-    build: ./php-apache2/php7.2
+    build: ./php-apache2/php${WEB2_PHP}
     working_dir: /var/www
     volumes:
       - ./apache2/vhost.conf:/etc/apache2/sites-enabled/app.conf
@@ -120,7 +120,7 @@ services:
       - frontend
 
   web3:
-    build: ./php-apache2/php7.4
+    build: ./php-apache2/php${WEB3_PHP}
     working_dir: /var/www
     volumes:
       - ./apache2/vhost.conf:/etc/apache2/sites-enabled/app.conf
@@ -138,7 +138,7 @@ services:
       - frontend
 
   web4:
-    build: ./php-apache2/php8.0
+    build: ./php-apache2/php${WEB4_PHP}
     working_dir: /var/www
     volumes:
       - ./apache2/vhost.conf:/etc/apache2/sites-enabled/app.conf
