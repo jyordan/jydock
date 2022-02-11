@@ -201,7 +201,7 @@ services:
     networks:
       - backend
     volumes:
-      - ./__volumes/redis/data:/bitnami/redis/data
+      - "./__volumes/redis/data:/bitnami/redis/data"
     ports:
       - "16379:6379"
       
