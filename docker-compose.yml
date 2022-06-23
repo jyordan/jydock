@@ -324,3 +324,7 @@ services:
       - "${MYSQL_PORT_DEV}:3306"
     networks:
       - backend
+    deploy:
+      restart_policy:
+        condition: on-failure
+        max_attempts: 10
