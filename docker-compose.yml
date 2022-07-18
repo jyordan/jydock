@@ -15,6 +15,7 @@ services:
     command: mysqld --sql_mode="STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION,ONLY_FULL_GROUP_BY"
     command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
     command: mysqld --general-log=1 --general-log-file=/var/log/mysql/general-log.log
+    command: "--init-file /script/init.sql"
     environment:
       - MYSQL_USER=${PMA_USER1}
       - MYSQL_PASSWORD=${PMA_PASSWORD1}
@@ -23,6 +24,7 @@ services:
       - ./__volumes/mysql1/data:/var/lib/mysql
       - ./__volumes/mysql1/log:/var/log/mysql
       - ./__volumes/mysql1/conf:/etc/mysql/conf.d
+      - ./mysql/init.sql:/script/init.sql
     ports:
       - "${MYSQL1_PORT}:3306"
     networks:
@@ -35,6 +37,7 @@ services:
     command: mysqld --sql_mode="STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION,ONLY_FULL_GROUP_BY"
     command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
     command: mysqld --general-log=1 --general-log-file=/var/log/mysql/general-log.log
+    command: "--init-file /script/init.sql"
     environment:
       - MYSQL_USER=${PMA_USER1}
       - MYSQL_PASSWORD=${PMA_PASSWORD1}
@@ -43,6 +46,7 @@ services:
       - ./__volumes/mysql2/data:/var/lib/mysql
       - ./__volumes/mysql2/log:/var/log/mysql
       - ./__volumes/mysql2/conf:/etc/mysql/conf.d
+      - ./mysql/init.sql:/script/init.sql
     ports:
       - "${MYSQL2_PORT}:3306"
     networks:
