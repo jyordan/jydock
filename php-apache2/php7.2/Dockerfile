@@ -10,6 +10,7 @@ RUN apt-get update && apt-get install -y \
         libxml2-dev \
         libzip-dev \
         libonig-dev \
+        libgmp-dev \
         zip \
         curl \
         unzip \
@@ -21,6 +22,7 @@ RUN apt-get update && apt-get install -y \
     && docker-php-ext-install pdo_mysql \
     && docker-php-ext-install mysqli \
     && docker-php-ext-install zip \
+    && docker-php-ext-install gmp \
     && docker-php-source delete
 
 RUN pecl install redis && docker-php-ext-enable redis
