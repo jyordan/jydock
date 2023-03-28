@@ -9,6 +9,7 @@ networks:
 services:
 
   mysql1:
+    platform: linux/x86_64
     # https://hub.docker.com/_/mysql
     image: mysql:${MYSQL_VERSION}
     command: --default-authentication-plugin=mysql_native_password
@@ -31,6 +32,7 @@ services:
       - backend
 
   mysql2:
+    platform: linux/x86_64
     # https://hub.docker.com/_/mysql
     image: mysql:${MYSQL_VERSION}
     command: --default-authentication-plugin=mysql_native_password
@@ -53,6 +55,7 @@ services:
       - backend
 
   mysql3:
+    platform: linux/x86_64
     # https://hub.docker.com/_/mysql
     image: mysql:${MYSQL_VERSION}
     command: --default-authentication-plugin=mysql_native_password
@@ -73,6 +76,7 @@ services:
       - backend
 
   phpmyadmin1:
+    platform: linux/x86_64
     image: phpmyadmin/phpmyadmin
     # command: bash -c "sed -i 's,^post_max_size =.*$,post_max_size = 2048M,' php.ini"
     environment:
@@ -93,6 +97,7 @@ services:
       - backend
 
   phpmyadmin2:
+    platform: linux/x86_64
     image: phpmyadmin/phpmyadmin
     # command: bash -c "sed -i 's,^post_max_size =.*$,post_max_size = 2048M,' php.ini"
     environment:
@@ -113,6 +118,7 @@ services:
       - backend
 
   phpmyadmin3:
+    platform: linux/x86_64
     image: phpmyadmin/phpmyadmin
     # command: bash -c "sed -i 's,^post_max_size =.*$,post_max_size = 2048M,' php.ini"
     environment:
@@ -133,6 +139,7 @@ services:
       - backend
 
   phpmyadmindev:
+    platform: linux/x86_64
     image: phpmyadmin/phpmyadmin
     # command: bash -c "sed -i 's,^post_max_size =.*$,post_max_size = 2048M,' php.ini"
     environment:
@@ -153,6 +160,7 @@ services:
       - backend
 
   web0:
+    platform: linux/x86_64
     build: ./php-apache2/php5.4
     working_dir: /var/www
     volumes:
@@ -170,6 +178,7 @@ services:
       - frontend
 
   web1:
+    platform: linux/x86_64
     build: ./php-apache2/php${WEB1_PHP}
     working_dir: /var/www
     volumes:
@@ -190,6 +199,7 @@ services:
       - frontend
 
   web2:
+    platform: linux/x86_64
     build: ./php-apache2/php${WEB2_PHP}
     working_dir: /var/www
     volumes:
@@ -208,6 +218,7 @@ services:
       - frontend
 
   web3:
+    platform: linux/x86_64
     build: ./php-apache2/php${WEB3_PHP}
     working_dir: /var/www
     volumes:
@@ -230,6 +241,7 @@ services:
       - frontend
 
   web4:
+    platform: linux/x86_64
     build: ./php-apache2/php${WEB4_PHP}
     working_dir: /var/www
     volumes:
@@ -252,6 +264,7 @@ services:
       - frontend
 
   supervisor3:
+    platform: linux/x86_64
     build: ./php-apache2/php${WEB3_PHP}
     working_dir: /var/www
     volumes:
@@ -271,6 +284,7 @@ services:
       - frontend
 
   artisan:
+    platform: linux/x86_64
     build: ./php-apache2/php${ARTISAN_VERSION}
     working_dir: /var/www
     volumes:
@@ -294,6 +308,7 @@ services:
       - "19515:9515"
       
   redis:
+    platform: linux/x86_64
     image: 'bitnami/redis:latest'
     environment:
       - ALLOW_EMPTY_PASSWORD=yes
@@ -315,6 +330,7 @@ services:
       - backend
       
   mysqldev:
+    platform: linux/x86_64
     image: 'cagataygurturk/docker-ssh-tunnel'
     volumes:
       - ${MYSQL_DEV}/id_rsa:/root/ssh/id_rsa
