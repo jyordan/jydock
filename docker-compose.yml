@@ -12,11 +12,15 @@ services:
     platform: linux/x86_64
     # https://hub.docker.com/_/mysql
     image: mysql:${MYSQL_VERSION}
-    command: --default-authentication-plugin=mysql_native_password
-    command: mysqld --sql_mode="STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION,ONLY_FULL_GROUP_BY"
-    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
-    command: mysqld --general-log=1 --general-log-file=/var/log/mysql/general-log.log
-    command: "--init-file /script/init.sql"
+    command: >
+      mysqld
+      --default-authentication-plugin=mysql_native_password
+      --sql_mode="STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION,ONLY_FULL_GROUP_BY"
+      --character-set-server=utf8mb4
+      --collation-server=utf8mb4_unicode_ci
+      --general-log=1
+      --general-log-file=/var/log/mysql/general-log.log
+      --init-file=/script/init.sql
     environment:
       - MYSQL_USER=${PMA_USER1}
       - MYSQL_PASSWORD=${PMA_PASSWORD1}
@@ -35,11 +39,15 @@ services:
     platform: linux/x86_64
     # https://hub.docker.com/_/mysql
     image: mysql:${MYSQL_VERSION}
-    command: --default-authentication-plugin=mysql_native_password
-    command: mysqld --sql_mode="STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION,ONLY_FULL_GROUP_BY"
-    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
-    command: mysqld --general-log=1 --general-log-file=/var/log/mysql/general-log.log
-    command: "--init-file /script/init.sql"
+    command: >
+      mysqld
+      --default-authentication-plugin=mysql_native_password
+      --sql_mode="STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION,ONLY_FULL_GROUP_BY"
+      --character-set-server=utf8mb4
+      --collation-server=utf8mb4_unicode_ci
+      --general-log=1
+      --general-log-file=/var/log/mysql/general-log.log
+      --init-file=/script/init.sql
     environment:
       - MYSQL_USER=${PMA_USER1}
       - MYSQL_PASSWORD=${PMA_PASSWORD1}
@@ -58,10 +66,14 @@ services:
     platform: linux/x86_64
     # https://hub.docker.com/_/mysql
     image: mysql:${MYSQL_VERSION}
-    command: --default-authentication-plugin=mysql_native_password
-    command: mysqld --sql_mode="STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION,ONLY_FULL_GROUP_BY"
-    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
-    command: mysqld --general-log=1 --general-log-file=/var/log/mysql/general-log.log
+    command: >
+      mysqld
+      --default-authentication-plugin=mysql_native_password
+      --sql_mode="STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION,ONLY_FULL_GROUP_BY"
+      --character-set-server=utf8mb4
+      --collation-server=utf8mb4_unicode_ci
+      --general-log=1
+      --general-log-file=/var/log/mysql/general-log.log
     environment:
       - MYSQL_USER=${PMA_USER1}
       - MYSQL_PASSWORD=${PMA_PASSWORD1}
