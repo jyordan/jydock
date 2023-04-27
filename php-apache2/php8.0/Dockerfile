@@ -25,6 +25,13 @@ RUN apt-get update && apt-get install -y \
     && docker-php-ext-install gmp \
     && docker-php-source delete
 
+RUN apt-get update && apt-get install -y \
+    software-properties-common \
+    npm
+RUN npm install npm@latest -g && \
+    npm install n -g && \
+    n latest
+
 RUN pecl install redis && docker-php-ext-enable redis
 
 # COPY .docker/vhost.conf /etc/apache2/sites-available/000-default.conf
