@@ -37,11 +37,11 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '0.2'
-          memory: 20M
+          cpus: '0.5'
+          memory: 512M
         reservations:
-          cpus: '0.1'
-          memory: 10M
+          cpus: '0.5'
+          memory: 512M
 
   mysql2:
     platform: linux/x86_64
@@ -72,11 +72,11 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '0.2'
-          memory: 20M
+          cpus: '0.5'
+          memory: 512M
         reservations:
-          cpus: '0.1'
-          memory: 10M
+          cpus: '0.5'
+          memory: 512M
 
   mysql3:
     platform: linux/x86_64
@@ -105,11 +105,11 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '0.2'
-          memory: 20M
+          cpus: '0.5'
+          memory: 512M
         reservations:
-          cpus: '0.1'
-          memory: 10M
+          cpus: '0.5'
+          memory: 512M
 
   phpmyadmin1:
     platform: linux/x86_64
@@ -134,11 +134,11 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '0.2'
-          memory: 20M
+          cpus: '0.5'
+          memory: 512M
         reservations:
-          cpus: '0.1'
-          memory: 10M
+          cpus: '0.5'
+          memory: 512M
 
   phpmyadmin2:
     platform: linux/x86_64
@@ -163,11 +163,11 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '0.2'
-          memory: 20M
+          cpus: '0.5'
+          memory: 512M
         reservations:
-          cpus: '0.1'
-          memory: 10M
+          cpus: '0.5'
+          memory: 512M
 
   phpmyadmin3:
     platform: linux/x86_64
@@ -192,11 +192,11 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '0.2'
-          memory: 20M
+          cpus: '0.5'
+          memory: 512M
         reservations:
-          cpus: '0.1'
-          memory: 10M
+          cpus: '0.5'
+          memory: 512M
 
   phpmyadmindev:
     platform: linux/x86_64
@@ -221,11 +221,11 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '0.2'
-          memory: 20M
+          cpus: '0.5'
+          memory: 512M
         reservations:
-          cpus: '0.1'
-          memory: 10M
+          cpus: '0.5'
+          memory: 512M
 
   web0:
     platform: linux/x86_64
@@ -245,11 +245,11 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '0.2'
-          memory: 20M
+          cpus: '0.5'
+          memory: 512M
         reservations:
-          cpus: '0.1'
-          memory: 10M
+          cpus: '0.5'
+          memory: 512M
 
   web1:
     platform: linux/x86_64
@@ -265,7 +265,7 @@ services:
     depends_on:
       - phpmyadmin1
       - redis
-      - artisan
+      # - artisan
     networks:
       - backend
       - frontend
@@ -292,7 +292,7 @@ services:
     depends_on:
       - phpmyadmin1
       - redis
-      - artisan
+      # - artisan
     networks:
       - backend
       - frontend
@@ -322,7 +322,7 @@ services:
     depends_on:
       - phpmyadmin1
       - redis
-      - artisan
+      # - artisan
     networks:
       - backend
       - frontend
@@ -350,7 +350,7 @@ services:
     depends_on:
       - phpmyadmin1
       - redis
-      - artisan
+      # - artisan
     networks:
       - backend
       - frontend
@@ -378,18 +378,18 @@ services:
     depends_on:
       - phpmyadmin1
       - redis
-      - artisan
+      # - artisan
     networks:
       - backend
       - frontend
     deploy:
       resources:
         limits:
-          cpus: '0.2'
-          memory: 20M
+          cpus: '0.5'
+          memory: 512M
         reservations:
-          cpus: '0.1'
-          memory: 10M
+          cpus: '0.5'
+          memory: 512M
 
   artisan:
     platform: linux/x86_64
@@ -408,11 +408,11 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '0.2'
-          memory: 20M
+          cpus: '4'
+          memory: 2048M
         reservations:
-          cpus: '0.1'
-          memory: 10M
+          cpus: '4'
+          memory: 2048M
 
   selenium:
     image: selenium/standalone-chrome:3.11.0-antimony
@@ -423,11 +423,11 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '0.2'
-          memory: 20M
+          cpus: '0.5'
+          memory: 512M
         reservations:
-          cpus: '0.1'
-          memory: 10M
+          cpus: '0.5'
+          memory: 512M
       
   redis:
     platform: linux/x86_64
@@ -443,11 +443,11 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '0.2'
-          memory: 20M
+          cpus: '0.5'
+          memory: 512M
         reservations:
-          cpus: '0.1'
-          memory: 10M
+          cpus: '0.5'
+          memory: 512M
       
   awscli:
     image: 'amazon/aws-cli'
@@ -461,11 +461,11 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '0.2'
-          memory: 20M
+          cpus: '0.5'
+          memory: 512M
         reservations:
-          cpus: '0.1'
-          memory: 10M
+          cpus: '0.5'
+          memory: 512M
       
   mysqldev:
     platform: linux/x86_64
@@ -485,11 +485,11 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '0.2'
-          memory: 20M
+          cpus: '0.5'
+          memory: 512M
         reservations:
-          cpus: '0.1'
-          memory: 10M
+          cpus: '0.5'
+          memory: 512M
       restart_policy:
         condition: on-failure
         max_attempts: 10

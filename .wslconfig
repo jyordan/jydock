@@ -1,17 +1,17 @@
-# file path: ~/.wslconfig
+# nano ~/.wslconfig
 
 # Settings apply across all Linux distros running on WSL 2
 [wsl2]
 # Limits VM memory to use no more than 4 GB, this can be set as whole numbers using GB or MB
-memory=1GB
+memory=2GB
 # Sets the VM to use two virtual processors
-processors=1
+processors=4
 # Specify a custom Linux kernel to use with your installed distros. The default kernel used can be found at https://github.com/microsoft/WSL2-Linux-Kernel
 # kernel=C:\\temp\\myCustomKernel
 # Sets additional kernel parameters, in this case enabling older Linux base images such as Centos 6
 kernelCommandLine = vsyscall=emulate
 # Sets amount of swap storage space to 8GB, default is 25% of available RAM
-swap=1GB
+swap=2GB
 # Sets swapfile path location, default is %USERPROFILE%\AppData\Local\Temp\swap.vhdx
 # swapfile=C:\\temp\\wsl-swap.vhdx
 # Disable page reporting so WSL retains all allocated memory claimed from Windows and releases none back when free
