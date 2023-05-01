@@ -1,4 +1,4 @@
-version: '3'
+version: '3.9'
 
 networks:
   frontend:
@@ -34,6 +34,14 @@ services:
       - "${MYSQL1_PORT}:3306"
     networks:
       - backend
+    deploy:
+      resources:
+        limits:
+          cpus: '0.2'
+          memory: 20M
+        reservations:
+          cpus: '0.1'
+          memory: 10M
 
   mysql2:
     platform: linux/x86_64
@@ -61,6 +69,14 @@ services:
       - "${MYSQL2_PORT}:3306"
     networks:
       - backend
+    deploy:
+      resources:
+        limits:
+          cpus: '0.2'
+          memory: 20M
+        reservations:
+          cpus: '0.1'
+          memory: 10M
 
   mysql3:
     platform: linux/x86_64
@@ -86,6 +102,14 @@ services:
       - "${MYSQL3_PORT}:3306"
     networks:
       - backend
+    deploy:
+      resources:
+        limits:
+          cpus: '0.2'
+          memory: 20M
+        reservations:
+          cpus: '0.1'
+          memory: 10M
 
   phpmyadmin1:
     platform: linux/x86_64
@@ -107,6 +131,14 @@ services:
     networks:
       - frontend
       - backend
+    deploy:
+      resources:
+        limits:
+          cpus: '0.2'
+          memory: 20M
+        reservations:
+          cpus: '0.1'
+          memory: 10M
 
   phpmyadmin2:
     platform: linux/x86_64
@@ -128,6 +160,14 @@ services:
     networks:
       - frontend
       - backend
+    deploy:
+      resources:
+        limits:
+          cpus: '0.2'
+          memory: 20M
+        reservations:
+          cpus: '0.1'
+          memory: 10M
 
   phpmyadmin3:
     platform: linux/x86_64
@@ -149,6 +189,14 @@ services:
     networks:
       - frontend
       - backend
+    deploy:
+      resources:
+        limits:
+          cpus: '0.2'
+          memory: 20M
+        reservations:
+          cpus: '0.1'
+          memory: 10M
 
   phpmyadmindev:
     platform: linux/x86_64
@@ -170,6 +218,14 @@ services:
     networks:
       - frontend
       - backend
+    deploy:
+      resources:
+        limits:
+          cpus: '0.2'
+          memory: 20M
+        reservations:
+          cpus: '0.1'
+          memory: 10M
 
   web0:
     platform: linux/x86_64
@@ -186,6 +242,14 @@ services:
     networks:
       - backend
       - frontend
+    deploy:
+      resources:
+        limits:
+          cpus: '0.2'
+          memory: 20M
+        reservations:
+          cpus: '0.1'
+          memory: 10M
 
   web1:
     platform: linux/x86_64
@@ -205,6 +269,14 @@ services:
     networks:
       - backend
       - frontend
+    deploy:
+      resources:
+        limits:
+          cpus: '0.2'
+          memory: 20M
+        reservations:
+          cpus: '0.1'
+          memory: 10M
 
   web2:
     platform: linux/x86_64
@@ -224,6 +296,14 @@ services:
     networks:
       - backend
       - frontend
+    deploy:
+      resources:
+        limits:
+          cpus: '0.2'
+          memory: 20M
+        reservations:
+          cpus: '0.1'
+          memory: 10M
 
   web3:
     platform: linux/x86_64
@@ -246,6 +326,14 @@ services:
     networks:
       - backend
       - frontend
+    deploy:
+      resources:
+        limits:
+          cpus: '0.2'
+          memory: 20M
+        reservations:
+          cpus: '0.1'
+          memory: 10M
 
   web4:
     platform: linux/x86_64
@@ -266,6 +354,14 @@ services:
     networks:
       - backend
       - frontend
+    deploy:
+      resources:
+        limits:
+          cpus: '0.2'
+          memory: 20M
+        reservations:
+          cpus: '0.1'
+          memory: 10M
 
   supervisor3:
     platform: linux/x86_64
@@ -286,6 +382,14 @@ services:
     networks:
       - backend
       - frontend
+    deploy:
+      resources:
+        limits:
+          cpus: '0.2'
+          memory: 20M
+        reservations:
+          cpus: '0.1'
+          memory: 10M
 
   artisan:
     platform: linux/x86_64
@@ -301,6 +405,14 @@ services:
       - redis
     networks:
       - backend
+    deploy:
+      resources:
+        limits:
+          cpus: '0.2'
+          memory: 20M
+        reservations:
+          cpus: '0.1'
+          memory: 10M
 
   selenium:
     image: selenium/standalone-chrome:3.11.0-antimony
@@ -308,6 +420,14 @@ services:
       - frontend
     ports:
       - "19515:9515"
+    deploy:
+      resources:
+        limits:
+          cpus: '0.2'
+          memory: 20M
+        reservations:
+          cpus: '0.1'
+          memory: 10M
       
   redis:
     platform: linux/x86_64
@@ -320,6 +440,14 @@ services:
       - "./__volumes/redis/data:/bitnami/redis/data"
     ports:
       - "16379:6379"
+    deploy:
+      resources:
+        limits:
+          cpus: '0.2'
+          memory: 20M
+        reservations:
+          cpus: '0.1'
+          memory: 10M
       
   awscli:
     image: 'amazon/aws-cli'
@@ -330,6 +458,14 @@ services:
       - AWS_DEFAULT_REGION=${AWS_DEFAULT_REGION}
     networks:
       - backend
+    deploy:
+      resources:
+        limits:
+          cpus: '0.2'
+          memory: 20M
+        reservations:
+          cpus: '0.1'
+          memory: 10M
       
   mysqldev:
     platform: linux/x86_64
@@ -347,6 +483,13 @@ services:
     networks:
       - backend
     deploy:
+      resources:
+        limits:
+          cpus: '0.2'
+          memory: 20M
+        reservations:
+          cpus: '0.1'
+          memory: 10M
       restart_policy:
         condition: on-failure
         max_attempts: 10
