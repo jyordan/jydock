@@ -272,11 +272,11 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '0.2'
-          memory: 20M
+          cpus: '0.5'
+          memory: 512M
         reservations:
-          cpus: '0.1'
-          memory: 10M
+          cpus: '0.5'
+          memory: 512M
 
   web2:
     platform: linux/x86_64
@@ -299,11 +299,11 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '0.2'
-          memory: 20M
+          cpus: '0.5'
+          memory: 512M
         reservations:
-          cpus: '0.1'
-          memory: 10M
+          cpus: '0.5'
+          memory: 512M
 
   web3:
     platform: linux/x86_64
@@ -329,11 +329,11 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '0.2'
-          memory: 20M
+          cpus: '0.5'
+          memory: 512M
         reservations:
-          cpus: '0.1'
-          memory: 10M
+          cpus: '0.5'
+          memory: 512M
 
   web4:
     platform: linux/x86_64
@@ -357,11 +357,11 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '0.2'
-          memory: 20M
+          cpus: '0.5'
+          memory: 512M
         reservations:
-          cpus: '0.1'
-          memory: 10M
+          cpus: '0.5'
+          memory: 512M
 
   supervisor3:
     platform: linux/x86_64
