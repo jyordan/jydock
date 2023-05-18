@@ -1,2 +1,7 @@
 cd "$(dirname "$0")"
-docker-compose stop $1
+
+if [ -z "$1" ]; then
+  docker-compose stop $1
+else
+  docker-compose stop
+fi
