@@ -7,13 +7,13 @@ DROP USER IF EXISTS 'readonly'@'%';
 DROP USER IF EXISTS 'crud'@'%';
 
 -- Create a read-only user
-CREATE USER 'readonly'@'%' IDENTIFIED BY 'password';
+CREATE USER 'readonly'@'%' IDENTIFIED BY 'readonly';
 
 -- Grant SELECT privileges on all tables in the database to the read-only user
 GRANT SELECT ON *.* TO 'readonly'@'%';
 
 -- Create a new user
-CREATE USER 'crud'@'%' IDENTIFIED BY 'password';
+CREATE USER 'crud'@'%' IDENTIFIED BY 'crud';
 
 -- Grant all privileges on all tables in the database to the new user
 GRANT ALL PRIVILEGES ON *.* TO 'crud'@'%';
