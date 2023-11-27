@@ -1,0 +1,13 @@
+version: "2"
+
+options:
+  compose-file-path: 'docker-compose.yml'
+  compose-dev-file-path: 'docker-compose-dev.yml'
+
+syncs:
+  web1-sync:
+    notify_terminal: true
+    src: './code/html/'
+    dest: '/var/www/html/'
+    sync_strategy: 'unison'  #uncomment this line to get other error
+    sync_prefer: 'default'

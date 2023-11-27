@@ -1,0 +1,510 @@
+version: '3.9'
+
+networks:
+  frontend:
+    driver: bridge
+  backend:
+    driver: bridge
+
+services:
+
+  mysql1:
+    platform: linux/x86_64
+    # https://hub.docker.com/_/mysql
+    image: mysql:${MYSQL_VERSION}
+    command: >
+      mysqld
+      --default-authentication-plugin=mysql_native_password
+      --sql_mode="STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION,ONLY_FULL_GROUP_BY"
+      --character-set-server=utf8mb4
+      --collation-server=utf8mb4_unicode_ci
+      --general-log=1
+      --general-log-file=/var/log/mysql/general-log.log
+      --init-file=/script/init.sql
+    environment:
+      - MYSQL_USER=${PMA_USER1}
+      - MYSQL_PASSWORD=${PMA_PASSWORD1}
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+    volumes:
+      - .:/app:delegated
+      - ./__volumes/mysql1/data:/var/lib/mysql
+      - ./__volumes/mysql1/log:/var/log/mysql
+      - ./__volumes/mysql1/conf:/etc/mysql/conf.d
+      - ./mysql/init.sql:/script/init.sql
+    ports:
+      - "${MYSQL1_PORT}:3306"
+    networks:
+      - backend
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 512M
+        reservations:
+          cpus: '0.5'
+          memory: 512M
+
+  mysql2:
+    platform: linux/x86_64
+    # https://hub.docker.com/_/mysql
+    image: mysql:${MYSQL_VERSION}
+    command: >
+      mysqld
+      --default-authentication-plugin=mysql_native_password
+      --sql_mode="STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION,ONLY_FULL_GROUP_BY"
+      --character-set-server=utf8mb4
+      --collation-server=utf8mb4_unicode_ci
+      --general-log=1
+      --general-log-file=/var/log/mysql/general-log.log
+      --init-file=/script/init.sql
+    environment:
+      - MYSQL_USER=${PMA_USER1}
+      - MYSQL_PASSWORD=${PMA_PASSWORD1}
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+    volumes:
+      - .:/app:delegated
+      - ./__volumes/mysql2/data:/var/lib/mysql
+      - ./__volumes/mysql2/log:/var/log/mysql
+      - ./__volumes/mysql2/conf:/etc/mysql/conf.d
+      - ./mysql/init.sql:/script/init.sql
+    ports:
+      - "${MYSQL2_PORT}:3306"
+    networks:
+      - backend
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 512M
+        reservations:
+          cpus: '0.5'
+          memory: 512M
+
+  mysql3:
+    platform: linux/x86_64
+    # https://hub.docker.com/_/mysql
+    image: mysql:${MYSQL_VERSION}
+    command: >
+      mysqld
+      --default-authentication-plugin=mysql_native_password
+      --sql_mode="STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION,ONLY_FULL_GROUP_BY"
+      --character-set-server=utf8mb4
+      --collation-server=utf8mb4_unicode_ci
+      --general-log=1
+      --general-log-file=/var/log/mysql/general-log.log
+    environment:
+      - MYSQL_USER=${PMA_USER1}
+      - MYSQL_PASSWORD=${PMA_PASSWORD1}
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+    volumes:
+      - .:/app:delegated
+      - ./__volumes/mysql3/data:/var/lib/mysql
+      - ./__volumes/mysql3/log:/var/log/mysql
+      - ./__volumes/mysql3/conf:/etc/mysql/conf.d
+    ports:
+      - "${MYSQL3_PORT}:3306"
+    networks:
+      - backend
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 512M
+        reservations:
+          cpus: '0.5'
+          memory: 512M
+
+  phpmyadmin1:
+    platform: linux/x86_64
+    image: phpmyadmin/phpmyadmin
+    # command: bash -c "sed -i 's,^post_max_size =.*$,post_max_size = 2048M,' php.ini"
+    environment:
+      - PMA_HOST=mysql1
+      - MYSQL_USER=${PMA_USER1}
+      - MYSQL_PASSWORD=${PMA_PASSWORD1}
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - UPLOAD_LIMIT=500M
+      - MEMORY_LIMIT=500M
+    # volumes:
+    #   - "./phpmyadmin/uploads.ini:/usr/local/etc/php/conf.d/uploads.ini"
+    ports:
+      - "${PMA_PORT1}:80"
+    depends_on:
+      - mysql1
+    networks:
+      - frontend
+      - backend
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 512M
+        reservations:
+          cpus: '0.5'
+          memory: 512M
+
+  phpmyadmin2:
+    platform: linux/x86_64
+    image: phpmyadmin/phpmyadmin
+    # command: bash -c "sed -i 's,^post_max_size =.*$,post_max_size = 2048M,' php.ini"
+    environment:
+      - PMA_HOST=mysql2
+      - MYSQL_USER=${PMA_USER1}
+      - MYSQL_PASSWORD=${PMA_PASSWORD1}
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - UPLOAD_LIMIT=500M
+      - MEMORY_LIMIT=500M
+    # volumes:
+    #   - "./phpmyadmin/uploads.ini:/usr/local/etc/php/conf.d/uploads.ini"
+    ports:
+      - "${PMA_PORT2}:80"
+    depends_on:
+      - mysql2
+    networks:
+      - frontend
+      - backend
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 512M
+        reservations:
+          cpus: '0.5'
+          memory: 512M
+
+  phpmyadmin3:
+    platform: linux/x86_64
+    image: phpmyadmin/phpmyadmin
+    # command: bash -c "sed -i 's,^post_max_size =.*$,post_max_size = 2048M,' php.ini"
+    environment:
+      - PMA_HOST=mysql3
+      - MYSQL_USER=${PMA_USER1}
+      - MYSQL_PASSWORD=${PMA_PASSWORD1}
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - UPLOAD_LIMIT=500M
+      - MEMORY_LIMIT=500M
+    # volumes:
+    #   - "./phpmyadmin/uploads.ini:/usr/local/etc/php/conf.d/uploads.ini"
+    ports:
+      - "${PMA_PORT3}:80"
+    depends_on:
+      - mysql3
+    networks:
+      - frontend
+      - backend
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 512M
+        reservations:
+          cpus: '0.5'
+          memory: 512M
+
+  phpmyadmindev:
+    platform: linux/x86_64
+    image: phpmyadmin/phpmyadmin
+    # command: bash -c "sed -i 's,^post_max_size =.*$,post_max_size = 2048M,' php.ini"
+    environment:
+      - PMA_HOST=mysqldev
+      - MYSQL_USER=${PMA_USER1}
+      - MYSQL_PASSWORD=${PMA_PASSWORD1}
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - UPLOAD_LIMIT=500M
+      - MEMORY_LIMIT=500M
+    # volumes:
+    #   - "./phpmyadmin/uploads.ini:/usr/local/etc/php/conf.d/uploads.ini"
+    ports:
+      - "${PMA_PORT_DEV}:80"
+    depends_on:
+      - mysqldev
+    networks:
+      - frontend
+      - backend
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 512M
+        reservations:
+          cpus: '0.5'
+          memory: 512M
+
+  web0:
+    platform: linux/x86_64
+    build: ./php-apache2/php5.4
+    working_dir: /var/www
+    volumes:
+      - .:/app:delegated
+      - ./apache2/vhost.conf:/etc/apache2/sites-enabled/app.conf
+      - ${WEB0_APP}:/var/www/
+      - ${WEB0_APACHE_SITES}:/etc/apache2/sites-available
+    ports:
+      - "${WEB0_PORT:-80}:80"
+    depends_on:
+      - phpmyadmin1
+    networks:
+      - backend
+      - frontend
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 512M
+        reservations:
+          cpus: '0.5'
+          memory: 512M
+
+  web1:
+    platform: linux/x86_64
+    build: ./php-apache2/php${WEB1_PHP}
+    working_dir: /var/www
+    volumes:
+      - .:/app:delegated
+      - ./apache2/vhost.conf:/etc/apache2/sites-enabled/app.conf
+      - ${WEB1_APP}:/var/www/
+      - ${WEB1_APACHE_SITES}:/etc/apache2/sites-available
+      - ./php-apache2/php-ini/php.ini:/usr/local/etc/php/conf.d/php.ini
+    ports:
+      - "${WEB1_PORT:-80}:80"
+    depends_on:
+      - phpmyadmin1
+      - redis
+      # - artisan
+    networks:
+      - backend
+      - frontend
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 512M
+        reservations:
+          cpus: '0.5'
+          memory: 512M
+
+  web2:
+    platform: linux/x86_64
+    build: ./php-apache2/php${WEB2_PHP}
+    working_dir: /var/www
+    volumes:
+      - .:/app:delegated
+      - ./apache2/vhost.conf:/etc/apache2/sites-enabled/app.conf
+      - ${WEB2_APP}:/var/www/
+      - ${WEB2_APACHE_SITES}:/etc/apache2/sites-available
+      - ./php-apache2/php-ini/php.ini:/usr/local/etc/php/conf.d/php.ini
+    ports:
+      - "${WEB2_PORT:-80}:80"
+    depends_on:
+      - phpmyadmin1
+      - redis
+      # - artisan
+    networks:
+      - backend
+      - frontend
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 512M
+        reservations:
+          cpus: '0.5'
+          memory: 512M
+
+  web3:
+    platform: linux/x86_64
+    build: ./php-apache2/php${WEB3_PHP}
+    working_dir: /var/www
+    volumes:
+      - .:/app:delegated
+      - ./apache2/vhost.conf:/etc/apache2/sites-enabled/app.conf
+      - ${WEB3_APP}:/var/www/
+      - ${WEB3_APACHE_SITES}:/etc/apache2/sites-available
+      - ./php-apache2/php-ini/php.ini:/usr/local/etc/php/conf.d/php.ini
+      - "./supervisord:/etc/supervisor/conf.d"
+    environment:
+      - IS_SUPERVISOR=1
+    ports:
+      - "${WEB3_PORT:-80}:80"
+    depends_on:
+      - phpmyadmin1
+      - redis
+      # - artisan
+    networks:
+      - backend
+      - frontend
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 512M
+        reservations:
+          cpus: '0.5'
+          memory: 512M
+
+  web4:
+    platform: linux/x86_64
+    build: ./php-apache2/php${WEB4_PHP}
+    working_dir: /var/www
+    volumes:
+      - .:/app:delegated
+      - ./apache2/vhost.conf:/etc/apache2/sites-enabled/app.conf
+      - ${WEB4_APP}:/var/www/
+      - ${WEB4_APACHE_SITES}:/etc/apache2/sites-available
+      - ./php-apache2/php-ini/php.ini:/usr/local/etc/php/conf.d/php.ini
+      - "./supervisord:/etc/supervisor/conf.d"
+    ports:
+      - "${WEB4_PORT:-80}:80"
+    depends_on:
+      - phpmyadmin1
+      - redis
+      # - artisan
+    networks:
+      - backend
+      - frontend
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 512M
+        reservations:
+          cpus: '0.5'
+          memory: 512M
+
+  supervisor3:
+    platform: linux/x86_64
+    build: ./php-apache2/php${WEB3_PHP}
+    working_dir: /var/www
+    volumes:
+      - .:/app:delegated
+      - ./apache2/vhost.conf:/etc/apache2/sites-enabled/app.conf
+      - ${WEB3_APP}:/var/www/
+      - ${WEB3_APACHE_SITES}:/etc/apache2/sites-available
+      - ./php-apache2/php-ini/php.ini:/usr/local/etc/php/conf.d/php.ini
+      - "./supervisord:/etc/supervisor/conf.d"
+    ports:
+      - "${WEB3_PORT:-80}:80"
+    depends_on:
+      - phpmyadmin1
+      - redis
+      # - artisan
+    networks:
+      - backend
+      - frontend
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 512M
+        reservations:
+          cpus: '0.5'
+          memory: 512M
+
+  artisan:
+    platform: linux/x86_64
+    build: ./php-apache2/php${ARTISAN_VERSION}
+    working_dir: /var/www
+    volumes:
+      - .:/app:delegated
+      # - ./apache2/vhost.conf:/etc/apache2/sites-enabled/app.conf
+      # - ${ARTISAN_APACHE_SITES}:/etc/apache2/sites-available
+      - ${ARTISAN_APP}:/var/www/
+      - ./php-apache2/php-ini/php.ini:/usr/local/etc/php/conf.d/php.ini
+    ports:
+      - "${ARTISAN_PORT:-80}:8000"
+      # - 3000:3000
+    depends_on:
+      - phpmyadmin1
+      - redis
+    networks:
+      - backend
+    deploy:
+      resources:
+        limits:
+          cpus: '4'
+          memory: 2048M
+        reservations:
+          cpus: '4'
+          memory: 2048M
+
+  selenium:
+    image: selenium/standalone-chrome:3.11.0-antimony
+    networks:
+      - frontend
+    ports:
+      - "19515:9515"
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 512M
+        reservations:
+          cpus: '0.5'
+          memory: 512M
+      
+  redis:
+    platform: linux/x86_64
+    image: 'bitnami/redis:latest'
+    environment:
+      - ALLOW_EMPTY_PASSWORD=yes
+    networks:
+      - backend
+    volumes:
+      - .:/app:delegated
+      - "./__volumes/redis/data:/bitnami/redis/data"
+    ports:
+      - "16379:6379"
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 512M
+        reservations:
+          cpus: '0.5'
+          memory: 512M
+      
+  awscli:
+    image: 'amazon/aws-cli'
+    environment:
+      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+      - AWS_SESSION_TOKEN=${AWS_SESSION_TOKEN}
+      - AWS_DEFAULT_REGION=${AWS_DEFAULT_REGION}
+    networks:
+      - backend
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 512M
+        reservations:
+          cpus: '0.5'
+          memory: 512M
+      
+  mysqldev:
+    platform: linux/x86_64
+    image: 'cagataygurturk/docker-ssh-tunnel'
+    volumes:
+      - .:/app:delegated
+      - ${MYSQL_DEV}/id_rsa:/root/ssh/id_rsa
+    environment:
+      SSH_DEBUG: "-v"
+      TUNNEL_HOST: ${MYSQL_TUNNEL_HOST}
+      REMOTE_HOST: ${MYSQL_REMOTE_HOST}
+      LOCAL_PORT: 3306
+      REMOTE_PORT: 3306
+    ports:
+      - "${MYSQL_PORT_DEV}:3306"
+    networks:
+      - backend
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 512M
+        reservations:
+          cpus: '0.5'
+          memory: 512M
+      restart_policy:
+        condition: on-failure
+        max_attempts: 10

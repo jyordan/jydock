@@ -26,6 +26,7 @@ services:
       - MYSQL_PASSWORD=${PMA_PASSWORD1}
       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
     volumes:
+      - .:/app:delegated
       - ./__volumes/mysql1/data:/var/lib/mysql
       - ./__volumes/mysql1/log:/var/log/mysql
       - ./__volumes/mysql1/conf:/etc/mysql/conf.d
@@ -61,6 +62,7 @@ services:
       - MYSQL_PASSWORD=${PMA_PASSWORD1}
       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
     volumes:
+      - .:/app:delegated
       - ./__volumes/mysql2/data:/var/lib/mysql
       - ./__volumes/mysql2/log:/var/log/mysql
       - ./__volumes/mysql2/conf:/etc/mysql/conf.d
@@ -90,14 +92,17 @@ services:
       --collation-server=utf8mb4_unicode_ci
       --general-log=1
       --general-log-file=/var/log/mysql/general-log.log
+      --init-file=/script/init.sql
     environment:
       - MYSQL_USER=${PMA_USER1}
       - MYSQL_PASSWORD=${PMA_PASSWORD1}
       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
     volumes:
+      - .:/app:delegated
       - ./__volumes/mysql3/data:/var/lib/mysql
       - ./__volumes/mysql3/log:/var/log/mysql
       - ./__volumes/mysql3/conf:/etc/mysql/conf.d
+      - ./mysql/init.sql:/script/init.sql
     ports:
       - "${MYSQL3_PORT}:3306"
     networks:
@@ -232,6 +237,7 @@ services:
     build: ./php-apache2/php5.4
     working_dir: /var/www
     volumes:
+      - .:/app:delegated
       - ./apache2/vhost.conf:/etc/apache2/sites-enabled/app.conf
       - ${WEB0_APP}:/var/www/
       - ${WEB0_APACHE_SITES}:/etc/apache2/sites-available
@@ -256,6 +262,7 @@ services:
     build: ./php-apache2/php${WEB1_PHP}
     working_dir: /var/www
     volumes:
+      - .:/app:delegated
       - ./apache2/vhost.conf:/etc/apache2/sites-enabled/app.conf
       - ${WEB1_APP}:/var/www/
       - ${WEB1_APACHE_SITES}:/etc/apache2/sites-available
@@ -265,6 +272,8 @@ services:
     depends_on:
       - phpmyadmin1
       - redis
+      - phpmyadmin2
+      - phpmyadmin3
       # - artisan
     networks:
       - backend
@@ -283,6 +292,7 @@ services:
     build: ./php-apache2/php${WEB2_PHP}
     working_dir: /var/www
     volumes:
+      - .:/app:delegated
       - ./apache2/vhost.conf:/etc/apache2/sites-enabled/app.conf
       - ${WEB2_APP}:/var/www/
       - ${WEB2_APACHE_SITES}:/etc/apache2/sites-available
@@ -310,6 +320,7 @@ services:
     build: ./php-apache2/php${WEB3_PHP}
     working_dir: /var/www
     volumes:
+      - .:/app:delegated
       - ./apache2/vhost.conf:/etc/apache2/sites-enabled/app.conf
       - ${WEB3_APP}:/var/www/
       - ${WEB3_APACHE_SITES}:/etc/apache2/sites-available
@@ -340,6 +351,7 @@ services:
     build: ./php-apache2/php${WEB4_PHP}
     working_dir: /var/www
     volumes:
+      - .:/app:delegated
       - ./apache2/vhost.conf:/etc/apache2/sites-enabled/app.conf
       - ${WEB4_APP}:/var/www/
       - ${WEB4_APACHE_SITES}:/etc/apache2/sites-available
@@ -368,6 +380,7 @@ services:
     build: ./php-apache2/php${WEB3_PHP}
     working_dir: /var/www
     volumes:
+      - .:/app:delegated
       - ./apache2/vhost.conf:/etc/apache2/sites-enabled/app.conf
       - ${WEB3_APP}:/var/www/
       - ${WEB3_APACHE_SITES}:/etc/apache2/sites-available
@@ -396,13 +409,14 @@ services:
     build: ./php-apache2/php${ARTISAN_VERSION}
     working_dir: /var/www
     volumes:
+      - .:/app:delegated
       # - ./apache2/vhost.conf:/etc/apache2/sites-enabled/app.conf
       # - ${ARTISAN_APACHE_SITES}:/etc/apache2/sites-available
       - ${ARTISAN_APP}:/var/www/
       - ./php-apache2/php-ini/php.ini:/usr/local/etc/php/conf.d/php.ini
     ports:
       - "${ARTISAN_PORT:-80}:8000"
-      - 3000:3000
+      # - 3000:3000
     depends_on:
       - phpmyadmin1
       - redis
@@ -440,6 +454,7 @@ services:
     networks:
       - backend
     volumes:
+      - .:/app:delegated
       - "./__volumes/redis/data:/bitnami/redis/data"
     ports:
       - "16379:6379"
@@ -474,6 +489,7 @@ services:
     platform: linux/x86_64
     image: 'cagataygurturk/docker-ssh-tunnel'
     volumes:
+      - .:/app:delegated
       - ${MYSQL_DEV}/id_rsa:/root/ssh/id_rsa
     environment:
       SSH_DEBUG: "-v"
