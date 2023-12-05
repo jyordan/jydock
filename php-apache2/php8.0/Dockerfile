@@ -26,11 +26,14 @@ RUN apt-get update && apt-get install -y \
     && docker-php-source delete
 
 RUN apt-get update && apt-get install -y \
-    software-properties-common \
-    npm
-RUN npm install npm@latest -g && \
-    npm install n -g && \
-    n latest
+    software-properties-common 
+    
+# RUN apt-get install -y git-core curl build-essential openssl libssl-dev \
+#  && git clone https://github.com/nodejs/node.git \
+#  && cd node \
+#  && ./configure \
+#  && make \
+#  && sudo make install
 
 RUN pecl install redis && docker-php-ext-enable redis
 
