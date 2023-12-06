@@ -27,7 +27,7 @@ RUN apt-get update && apt-get install -y \
 
 RUN apt-get update && apt-get install -y \
     software-properties-common 
-    
+
 # RUN apt-get install -y git-core curl build-essential openssl libssl-dev \
 #  && git clone https://github.com/nodejs/node.git \
 #  && cd node \
@@ -41,7 +41,8 @@ RUN pecl install redis && docker-php-ext-enable redis
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
-RUN composer config --global repos.packagist composer https://packagist.org
+RUN composer config -g repo.packagist composer https://packagist.org
+RUN composer config process-timeout 3600
 
 RUN chown -R www-data:www-data /var/www/html \
     && a2enmod rewrite
