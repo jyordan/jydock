@@ -1,4 +1,4 @@
-version: '3.9'
+version: "3.9"
 
 networks:
   frontend:
@@ -7,7 +7,6 @@ networks:
     driver: bridge
 
 services:
-
   mysql1:
     platform: linux/x86_64
     # https://hub.docker.com/_/mysql
@@ -27,6 +26,7 @@ services:
       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
     volumes:
       - .:/app:delegated
+      - ./home:/home
       - ./__volumes/mysql1/data:/var/lib/mysql
       - ./__volumes/mysql1/log:/var/log/mysql
       - ./__volumes/mysql1/conf:/etc/mysql/conf.d
@@ -38,10 +38,10 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '0.5'
+          cpus: "0.5"
           memory: 512M
         reservations:
-          cpus: '0.5'
+          cpus: "0.5"
           memory: 512M
 
   mysql2:
@@ -63,6 +63,7 @@ services:
       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
     volumes:
       - .:/app:delegated
+      - ./home:/home
       - ./__volumes/mysql2/data:/var/lib/mysql
       - ./__volumes/mysql2/log:/var/log/mysql
       - ./__volumes/mysql2/conf:/etc/mysql/conf.d
@@ -74,10 +75,10 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '0.5'
+          cpus: "0.5"
           memory: 512M
         reservations:
-          cpus: '0.5'
+          cpus: "0.5"
           memory: 512M
 
   mysql3:
@@ -99,6 +100,7 @@ services:
       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
     volumes:
       - .:/app:delegated
+      - ./home:/home
       - ./__volumes/mysql3/data:/var/lib/mysql
       - ./__volumes/mysql3/log:/var/log/mysql
       - ./__volumes/mysql3/conf:/etc/mysql/conf.d
@@ -110,10 +112,10 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '0.5'
+          cpus: "0.5"
           memory: 512M
         reservations:
-          cpus: '0.5'
+          cpus: "0.5"
           memory: 512M
 
   phpmyadmin1:
@@ -139,10 +141,10 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '0.5'
+          cpus: "0.5"
           memory: 512M
         reservations:
-          cpus: '0.5'
+          cpus: "0.5"
           memory: 512M
 
   phpmyadmin2:
@@ -168,10 +170,10 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '0.5'
+          cpus: "0.5"
           memory: 512M
         reservations:
-          cpus: '0.5'
+          cpus: "0.5"
           memory: 512M
 
   phpmyadmin3:
@@ -197,10 +199,10 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '0.5'
+          cpus: "0.5"
           memory: 512M
         reservations:
-          cpus: '0.5'
+          cpus: "0.5"
           memory: 512M
 
   phpmyadmindev:
@@ -226,10 +228,10 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '0.5'
+          cpus: "0.5"
           memory: 512M
         reservations:
-          cpus: '0.5'
+          cpus: "0.5"
           memory: 512M
 
   web0:
@@ -251,10 +253,10 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '0.5'
+          cpus: "0.5"
           memory: 512M
         reservations:
-          cpus: '0.5'
+          cpus: "0.5"
           memory: 512M
 
   web1:
@@ -281,10 +283,10 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '0.5'
+          cpus: "0.5"
           memory: 512M
         reservations:
-          cpus: '0.5'
+          cpus: "0.5"
           memory: 512M
 
   web2:
@@ -309,10 +311,10 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '0.5'
+          cpus: "0.5"
           memory: 512M
         reservations:
-          cpus: '0.5'
+          cpus: "0.5"
           memory: 512M
 
   web3:
@@ -340,10 +342,10 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '0.5'
+          cpus: "0.5"
           memory: 512M
         reservations:
-          cpus: '0.5'
+          cpus: "0.5"
           memory: 512M
 
   web4:
@@ -369,10 +371,10 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '0.5'
+          cpus: "0.5"
           memory: 512M
         reservations:
-          cpus: '0.5'
+          cpus: "0.5"
           memory: 512M
 
   supervisor3:
@@ -398,10 +400,10 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '0.5'
+          cpus: "0.5"
           memory: 512M
         reservations:
-          cpus: '0.5'
+          cpus: "0.5"
           memory: 512M
 
   artisan:
@@ -425,10 +427,10 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '4'
+          cpus: "4"
           memory: 2048M
         reservations:
-          cpus: '4'
+          cpus: "4"
           memory: 2048M
 
   selenium:
@@ -440,15 +442,15 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '0.5'
+          cpus: "0.5"
           memory: 512M
         reservations:
-          cpus: '0.5'
+          cpus: "0.5"
           memory: 512M
-      
+
   redis:
     platform: linux/x86_64
-    image: 'bitnami/redis:latest'
+    image: "bitnami/redis:latest"
     environment:
       - ALLOW_EMPTY_PASSWORD=yes
     networks:
@@ -461,14 +463,14 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '0.5'
+          cpus: "0.5"
           memory: 512M
         reservations:
-          cpus: '0.5'
+          cpus: "0.5"
           memory: 512M
-      
+
   awscli:
-    image: 'amazon/aws-cli'
+    image: "amazon/aws-cli"
     environment:
       - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
       - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
@@ -479,15 +481,15 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '0.5'
+          cpus: "0.5"
           memory: 512M
         reservations:
-          cpus: '0.5'
+          cpus: "0.5"
           memory: 512M
-      
+
   mysqldev:
     platform: linux/x86_64
-    image: 'cagataygurturk/docker-ssh-tunnel'
+    image: "cagataygurturk/docker-ssh-tunnel"
     volumes:
       - .:/app:delegated
       - ${MYSQL_DEV}/id_rsa:/root/ssh/id_rsa
@@ -504,10 +506,10 @@ services:
     deploy:
       resources:
         limits:
-          cpus: '0.5'
+          cpus: "0.5"
           memory: 512M
         reservations:
-          cpus: '0.5'
+          cpus: "0.5"
           memory: 512M
       restart_policy:
         condition: on-failure
