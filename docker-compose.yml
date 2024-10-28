@@ -263,6 +263,9 @@ services:
     platform: linux/x86_64
     build: ./php-apache2/php${WEB1_PHP}
     working_dir: /var/www
+    dns:
+      - "8.8.8.8"       # Primary DNS server
+      - "8.8.4.4"       # Secondary DNS server
     volumes:
       - .:/app:delegated
       - ./apache2/vhost.conf:/etc/apache2/sites-enabled/app.conf
@@ -283,16 +286,16 @@ services:
     deploy:
       resources:
         limits:
-          cpus: "0.5"
-          memory: 512M
-        reservations:
-          cpus: "0.5"
-          memory: 512M
+          cpus: "1"
+          memory: 2048M
 
   web2:
     platform: linux/x86_64
     build: ./php-apache2/php${WEB2_PHP}
     working_dir: /var/www
+    dns:
+      - "8.8.8.8"       # Primary DNS server
+      - "8.8.4.4"       # Secondary DNS server
     volumes:
       - .:/app:delegated
       - ./apache2/vhost.conf:/etc/apache2/sites-enabled/app.conf
@@ -321,6 +324,9 @@ services:
     platform: linux/x86_64
     build: ./php-apache2/php${WEB3_PHP}
     working_dir: /var/www
+    dns:
+      - "8.8.8.8"       # Primary DNS server
+      - "8.8.4.4"       # Secondary DNS server
     volumes:
       - .:/app:delegated
       - ./apache2/vhost.conf:/etc/apache2/sites-enabled/app.conf
@@ -352,6 +358,9 @@ services:
     platform: linux/x86_64
     build: ./php-apache2/php${WEB4_PHP}
     working_dir: /var/www
+    dns:
+      - "8.8.8.8"       # Primary DNS server
+      - "8.8.4.4"       # Secondary DNS server
     volumes:
       - .:/app:delegated
       - ./apache2/vhost.conf:/etc/apache2/sites-enabled/app.conf
@@ -408,29 +417,27 @@ services:
 
   artisan:
     platform: linux/x86_64
-    build: ./php-apache2/php${ARTISAN_VERSION}
+    build: ./php-apache2/php${WEB1_PHP}
     working_dir: /var/www
+    dns:
+      - "8.8.8.8"       # Primary DNS server
+      - "8.8.4.4"       # Secondary DNS server
     volumes:
       - .:/app:delegated
       # - ./apache2/vhost.conf:/etc/apache2/sites-enabled/app.conf
       # - ${ARTISAN_APACHE_SITES}:/etc/apache2/sites-available
-      - ${ARTISAN_APP}:/var/www/
+      - ${WEB1_APP}:/var/www/
       - ./php-apache2/php-ini/php.ini:/usr/local/etc/php/conf.d/php.ini
-    ports:
-      - "${ARTISAN_PORT:-80}:8000"
-      # - 3000:3000
     depends_on:
       - phpmyadmin1
       - redis
+      - phpmyadmin2
     networks:
       - backend
     deploy:
       resources:
         limits:
-          cpus: "4"
-          memory: 2048M
-        reservations:
-          cpus: "4"
+          cpus: "2"
           memory: 2048M
 
   selenium:

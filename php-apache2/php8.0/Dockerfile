@@ -5,46 +5,42 @@ USER root
 WORKDIR /var/www/html
 
 RUN apt-get update && apt-get install -y \
-        libpng-dev \
-        zlib1g-dev \
-        libxml2-dev \
-        libzip-dev \
-        libonig-dev \
-        libgmp-dev \
-        zip \
-        curl \
-        unzip \
-        nano \
-        git-crypt \
-        supervisor \
-    && docker-php-ext-configure gd \
-    && docker-php-ext-install -j$(nproc) gd \
-    && docker-php-ext-install pdo_mysql \
-    && docker-php-ext-install mysqli \
-    && docker-php-ext-install zip \
-    && docker-php-ext-install gmp \
-    && docker-php-source delete
+    unzip \
+    curl \
+    libpq-dev \
+    libcurl4-gnutls-dev \
+    libonig-dev \
+    libzip-dev \
+    libjpeg-dev \
+    libfreetype6-dev \
+    libpng-dev \
+    libmagickwand-dev \
+    libssl-dev \
+    bash \
+    nano \
+    git-crypt \
+    supervisor \
+    software-properties-common \
+    && docker-php-ext-configure gd --with-freetype --with-jpeg \
+    && docker-php-ext-install gd zip mysqli pdo pdo_mysql bcmath curl opcache mbstring pcntl \
+    && pecl install redis \
+    && docker-php-ext-enable redis \
+    && docker-php-source delete \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
 
-RUN apt-get update && apt-get install -y \
-    software-properties-common 
-
-# RUN apt-get install -y git-core curl build-essential openssl libssl-dev \
-#  && git clone https://github.com/nodejs/node.git \
-#  && cd node \
-#  && ./configure \
-#  && make \
-#  && sudo make install
-
-RUN pecl install redis && docker-php-ext-enable redis
 
 # COPY .docker/vhost.conf /etc/apache2/sites-available/000-default.conf
 
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+# Copy composer executable.
+COPY --from=composer:2.4.2 /usr/bin/composer /usr/bin/composer
 
-RUN composer config -g repo.packagist composer https://packagist.org
-RUN composer config --global process-timeout 3600
+# Adjust user permission & group.
+RUN usermod --uid 1000 www-data
+RUN groupmod --gid 1000  www-data
 
-RUN chown -R www-data:www-data /var/www/html \
+RUN chown -R www-data:www-data ./ \
+    && chmod -R 775 ./ \
     && a2enmod rewrite
 
 # CMD ["/usr/bin/supervisord"]
