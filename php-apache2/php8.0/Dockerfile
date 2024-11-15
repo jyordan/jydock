@@ -5,6 +5,7 @@ USER root
 WORKDIR /var/www/html
 
 RUN apt-get update && apt-get install -y \
+    sudo \
     unzip \
     curl \
     libpq-dev \
@@ -30,18 +31,24 @@ RUN apt-get update && apt-get install -y \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-
 # COPY .docker/vhost.conf /etc/apache2/sites-available/000-default.conf
 
 # Copy composer executable.
 COPY --from=composer:2.4.2 /usr/bin/composer /usr/bin/composer
 
 # Adjust user permission & group and create appuser with necessary groups and shell
-RUN usermod --uid 1000 www-data && \
+RUN apt-get update && apt-get install -y sudo && \
+    usermod --uid 1000 www-data && \
     groupmod --gid 1000 www-data && \
     useradd -u 1001 -m -s /bin/bash -G www-data appuser && \
     groupadd -g 1001 appuser || true && \
-    usermod -aG appuser appuser
+    usermod -aG appuser appuser && \
+    echo "appuser ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
+
+# Setup laravel cron job
+RUN echo "* * * * * appuser $(which php) $(pwd)/artisan schedule:run >> /dev/null 2>&1" > /etc/cron.d/mycron
+RUN chmod 644 /etc/cron.d/mycron
+RUN crontab /etc/cron.d/mycron
 
 RUN chown -R appuser:appuser ./ \
     && chmod -R 775 ./ \
