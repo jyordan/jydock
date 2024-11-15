@@ -21,6 +21,7 @@ RUN apt-get update && apt-get install -y \
     git-crypt \
     supervisor \
     software-properties-common \
+    cron procps \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install gd zip mysqli pdo pdo_mysql bcmath curl opcache mbstring pcntl \
     && pecl install redis \
