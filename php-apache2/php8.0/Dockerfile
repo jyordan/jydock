@@ -49,6 +49,8 @@ RUN apt-get update && apt-get install -y sudo && \
 RUN echo "* * * * * appuser $(which php) $(pwd)/artisan schedule:run >> /dev/null 2>&1" > /etc/cron.d/mycron
 RUN chmod 644 /etc/cron.d/mycron
 RUN crontab /etc/cron.d/mycron
+RUN rm -f /var/run/crond.pid
+
 
 RUN chown -R appuser:appuser ./ \
     && chmod -R 775 ./ \
