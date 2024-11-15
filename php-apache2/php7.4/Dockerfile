@@ -41,7 +41,16 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 RUN composer config -g repo.packagist composer https://packagist.org
 RUN composer config --global process-timeout 3600
 
-RUN chown -R www-data:www-data /var/www/html \
+# Adjust user permission & group and create appuser with necessary groups and shell
+RUN usermod --uid 1000 www-data && \
+    groupmod --gid 1000 www-data && \
+    useradd -u 1001 -m -s /bin/bash -G www-data appuser && \
+    groupadd -g 1001 appuser || true && \
+    usermod -aG appuser appuser
+
+RUN chown -R appuser:appuser /var/www/html \
     && a2enmod rewrite
+
+USER appuser
 
 # CMD ["/usr/bin/supervisord"]

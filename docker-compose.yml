@@ -419,6 +419,7 @@ services:
     platform: linux/x86_64
     build: ./php-apache2/php${WEB1_PHP}
     working_dir: /var/www
+    # user: appuser
     dns:
       - "8.8.8.8"       # Primary DNS server
       - "8.8.4.4"       # Secondary DNS server
