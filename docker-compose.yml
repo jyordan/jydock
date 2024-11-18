@@ -311,14 +311,14 @@ services:
     networks:
       - backend
       - frontend
-    deploy:
-      resources:
-        limits:
-          cpus: "0.5"
-          memory: 512M
-        reservations:
-          cpus: "0.5"
-          memory: 512M
+    # deploy:
+    #   resources:
+    #     limits:
+    #       cpus: "0.5"
+    #       memory: 512M
+    #     reservations:
+    #       cpus: "0.5"
+    #       memory: 512M
 
   web3:
     platform: linux/x86_64
